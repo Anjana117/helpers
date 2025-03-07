@@ -3,21 +3,16 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 Route::get('/',function()
 {
-   
+
     return view('home');
 }
 
 );
-
-
-
-
-
 Route::controller(UserController::class)->group(function (){
-    // Route::get('/register','index');
-    // Route::post('/register/store','store');
     Route::prefix('register')->group(function () {
         Route::get('/','index');
         Route::post('/store','store');
@@ -33,4 +28,9 @@ Route::controller(LoginController::class)->group(function (){
     Route::get('/dashboard', 'dashboardPage')->name('dashboard');
     Route::get('/logout','logout')->name('logout');
 });
+Route::get('/addcategory',[CategoryController::class,'index'])->name('category');
+Route::post('/category/store', [CategoryController::class, 'store'])->name('category.store');
+Route::get('/category/show', [CategoryController::class, 'showCategory'])->name('category.show');
+Route::get('/product', [ProductController::class, 'index']);
+Route::get('/product/store', [ProductController::class, 'store'])->name('product.store');
 

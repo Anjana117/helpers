@@ -4,10 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Models\user;
-use App\Helpers\SearchHelper;
+use App\Models\User;
+use App\Repositories\User\UserRepository;
+use App\Http\Requests\UserRequest;
 
 class UserController extends Controller {
+
+    protected $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
+
     /**
     * Display a listing of the resource.
     */
@@ -16,68 +26,40 @@ class UserController extends Controller {
         return view( 'auth.register' );
     }
 
-    /**
-    * Show the form for creating a new resource.
-    */
 
-    public function create() {
-        //
-    }
 
     /**
     * Store a newly created resource in storage.
     */
 
-    public function store( Request $request ) {
-        $data = $request->validate( [
-            'name'=>'required',
-            'email'=>'required|email',
-            'password'=>'required',
+    public function store(UserRequest $request ) {
+     $users  =  $this->userRepository->store($request->all());
 
-        ] );
-        $users = User::create( [
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make( $request->password ),
-        ] );
-        if ( $users ) {
+         if ( $users ) {
             return redirect( '/login' );
         }
-
-    }
-
-    /**
-    * Display the specified resource.
-    */
-
-    public function show( string $id ) {
-        //
-    }
+}
 
     /**
     * Show the form for editing the specified resource.
     */
 
-    public function edit( string $id ) {
-        $user = User::findOrFail( $id );
-        return view( 'edit', compact( 'user' ) );
+    public function edit(string $id) {
+        $user = User::where('id', $id)->first();
+        return view('edit', compact('user'));
     }
+
 
     /**
     * Update the specified resource in storage.
     */
 
-    public function update( Request $request, string $id ) {
+    public function update(Request $request, string $id) {
         try {
-
-            $data = [
-                'name' => $request[ 'name' ],
-                'email'=> $request[ 'email' ],
-            ];
-            User::where( 'id', $id )->update( $data );
-            return redirect( '/dashboard' )->with( 'success', 'User updated successfully' );
-        } catch ( \Exception $ex ) {
-            return response()->back()->with( 'error', $ex->getMessage() );
+           $this->userRepository->update($request->all(),$id);
+        return redirect('/dashboard')->with('success', 'User updated successfully');
+        } catch (\Exception $ex) {
+            return back()->with('error', 'Something went wrong!');
         }
     }
 
@@ -93,14 +75,13 @@ class UserController extends Controller {
 
     public function searchUser(Request $request)
     {
-        $text = $request->input('name'); 
-        $users = SearchHelper::searchUserByName($text); 
-    
-        if ($users->isEmpty()) { 
+        $text = $request->input('name');
+        $users = $this->userRepository->getSearchData($text);
+        if ($users->isEmpty()) {
             return response()->json(['message' => 'User not found'], 404);
         }
-    
-    return response()->json(['users' => $users]); 
+
+    return response()->json(['users' => $users]);
         // return redirect( '/dashboard' );
     }
 }

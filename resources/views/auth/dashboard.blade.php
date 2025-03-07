@@ -9,11 +9,13 @@
 
                     <div class="d-flex justify-content-center">
                         <a href="{{ route('logout') }}" class="btn btn-danger mb-4">Logout</a>
+                        <a href="{{ route('category') }}" class="btn btn-success ms-2 mb-4">Add Category</a>
                     </div>
+
 
                     <!-- Search Form -->
                     <input type="text"  id="search" name="name" placeholder="Enter user name" class="form-control mb-3">
-                    
+
                     <!-- User Table -->
                     <table class="table table-hover mt-2 table-bordered">
                         <thead>
@@ -47,14 +49,16 @@
             </div>
         </div>
     </div>
-
+    <div class="d-flex justify-content-center">
+        {{ $users->links('pagination::bootstrap-5') }}
+    </div>
     <!-- AJAX for Search -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
+    {{-- <script>
         $(document).ready(function () {
             $("#search").on("keyup", function () {
-                var searchValue = $(this).val(); 
-                
+                var searchValue = $(this).val();
+
                 $.ajax({
                     url: "{{ route('search.user') }}",
                     method: "GET",
@@ -89,5 +93,67 @@
                 });
             });
         });
+    </script> --}}
+
+
+    <script>
+        $(document).ready(function () {
+            $("#search").on("keyup", function () {
+                var searchValue = $(this).val();
+
+                $.ajax({
+                    url: "{{ route('search.user') }}",
+                    method: "GET",
+                    data: { name: searchValue },
+                    success: function (response) {
+                        var rows = "";
+                        if (response.users.length > 0) {
+                            $.each(response.users, function (index, user) {
+                                rows += "<tr>";
+                                rows += "<td>" + (index + 1) + "</td>";
+                                rows += "<td>" + user.name + "</td>";
+                                rows += "<td>" + user.email + "</td>";
+                                rows += `<td>
+                                    <a href='/edit/${user.id}' class='btn btn-primary'>Edit</a>
+                                    <form method='POST' action='/delete/${user.id}' class='d-inline delete-form'>
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type='button' class='btn delete-btn btn-danger'>Delete</button>
+                                    </form>
+                                </td>`;
+                                rows += "</tr>";
+                            });
+                        } else {
+                            rows = "<tr><td colspan='4' class='text-center'>No users found</td></tr>";
+                        }
+
+                        $("#userTable").html(rows);
+                    },
+                    error: function () {
+                        $("#userTable").html("<tr><td colspan='4' class='text-center'>Error fetching users</td></tr>");
+                    }
+                });
+            });
+
+            // Fix delete button by using event delegation
+            $(document).on("click", ".delete-btn", function () {
+                var form = $(this).closest("form");
+                if (confirm("Are you sure you want to delete this user?")) {
+                    $.ajax({
+                        url: form.attr("action"),
+                        method: "POST",
+                        data: form.serialize(),
+                        success: function (response) {
+                            alert(response.message); // Show success message
+                            $("#search").trigger("keyup"); // Refresh table after deletion
+                        },
+                        error: function () {
+                            alert("Error deleting user.");
+                        }
+                    });
+                }
+            });
+        });
     </script>
+
 @endsection
