@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use App\Repositories\Category\CategoryRepository;
-use App\Repositories\User\CategoryRepositoryEloquent;
+use App\Repositories\Category\CategoryRepositoryEloquent;
 use App\Repositories\User\UserRepository;
 use App\Repositories\User\UserRepositoryEloquent;
+use App\Repositories\Product\ProductRepository;
+use App\Repositories\Product\ProductRepositoryEloquent;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -16,10 +18,11 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
 
-        $this->app->bind(UserRepository::class, CategoryRepositoryEloquent::class);
+        $this->app->bind(UserRepository::class, UserRepositoryEloquent::class);
 
 
         $this->app->bind(CategoryRepository::class, CategoryRepositoryEloquent::class);
+        $this->app->bind(ProductRepository::class, ProductRepositoryEloquent::class);
 
     }
 

@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Repositories\Category;
+namespace App\Repositories\Product;
 
-use App\Models\Category;
-use App\Repositories\Category\CategoryRepository;
+use App\Models\Product;
+use App\Repositories\Product\ProductRepository;
 
 
-class CategoryRepositoryEloquent implements CategoryRepository
+class ProductRepositoryEloquent implements ProductRepository
 {
     protected $model;
 
-    public function __construct(Category $model)
+    public function __construct(Product $model)
     {
         $this->model = $model;
     }
@@ -19,6 +19,7 @@ class CategoryRepositoryEloquent implements CategoryRepository
     {
             return $this->model->create($data);
     }
+    
     public function getAll(){
         return $this->model->all();
     }

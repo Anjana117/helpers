@@ -5,11 +5,11 @@
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="card mt-3 p-3">
-                    <h2 class="mb-4 text-center">Welcome {{ Auth::user()->name }}</h2>
+                  
 
                     <div class="d-flex justify-content-center">
                         <a href="{{ route('logout') }}" class="btn btn-danger mb-4">Logout</a>
-                        <a href="{{ route('category') }}" class="btn btn-success ms-2 mb-4">Add Category</a>
+                        <a href="{{ route('categories.index') }}" class="btn btn-success ms-2 mb-4">Add Category</a>
                     </div>
 
 

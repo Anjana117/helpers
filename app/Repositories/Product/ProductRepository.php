@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Repositories\Category;
+namespace App\Repositories\Product;
 
 
-interface CategoryRepository
+interface ProductRepository
 {
     public function store($data);
     public function getAll();
