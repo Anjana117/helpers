@@ -9,9 +9,8 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['product_name', 'product_description', 'category_id'];
+    protected $fillable = ['product_name', 'product_description','price','image', 'category_id'];
 
-    // Inverse relationship: A product belongs to a category
     public function category()
     {
         return $this->belongsTo(Category::class);

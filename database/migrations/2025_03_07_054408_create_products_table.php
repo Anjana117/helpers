@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('product_name')->nullable();
             $table->text('product_description')->nullable();
+            $table->Integer('price')->nullable();
+            $table->string('image')->nullable();
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

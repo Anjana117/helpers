@@ -5,6 +5,8 @@ namespace App\Repositories\User;
 use App\Models\User;
 use App\Repositories\User\UserRepository;
 
+
+
 class UserRepositoryEloquent implements UserRepository
 {
     protected $model;

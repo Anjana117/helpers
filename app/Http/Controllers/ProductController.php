@@ -2,42 +2,51 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Product;
+use App\Http\Requests\ProductRequest;
 use App\Models\Category;
+use App\Models\Product;
+use App\Repositories\Product\ProductRepository;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    
-    public function create($category)
-{
-    $categories = Category::all();
-    return view('product.product', compact('categories', 'category'));
-}
+    protected $productRepository;
 
-
-public function show()
-{
-    $products = Product::all();
-   
-    return view('product.showproduct',compact('products'));
-}
-
-
-    public function store(Request $request)
+    public function __construct(ProductRepository $productRepository)
     {
-        $request->validate([
-            'product_name' => 'required|string|max:255',
-            'product_description' => 'nullable|string',
-            'category_id' => 'required|exists:categories,id',
-        ]);
+        $this->productRepository = $productRepository;
+    }
 
-        Product::create([
-            'product_name' => $request->product_name,
-            'product_description' => $request->product_description,
-            'category_id' => $request->category_id,
-        ]);
+    public function create($category)
+    {
+        $categories = Category::all();
+        return view('product.product', compact('categories', 'category'));
+    }
 
+    public function show(Request $request)
+    {
+        $categoryId = (int) $request->get('category');
+        $products = $this->productRepository->getByCategory($categoryId);
+        return view('product.showproduct', compact('products'));
+    }
+
+    public function delete($id)
+    {
+        $this->productRepository->delete($id);
+
+        return redirect()
+            ->route('products.show')
+            ->with('success', 'Category deleted successfully!');
+    }
+
+    public function store(ProductRequest $request)
+    {
+        $validatedData = $request->all();
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('products', 'public');
+            $validatedData['image'] = $imagePath;
+        }
+        $this->productRepository->store($validatedData);
         return redirect()->route('products.show')->with('success', 'Product added successfully!');
     }
 }

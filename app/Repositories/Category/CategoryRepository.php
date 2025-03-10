@@ -2,10 +2,12 @@
 
 namespace App\Repositories\Category;
 
+use Illuminate\Database\Eloquent\Collection;
 
 interface CategoryRepository
 {
-    public function store($data);
+    public function store(array $data);
     public function getAll();
+    public function delete(int $id);
 
 }

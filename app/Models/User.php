@@ -60,4 +60,10 @@ class User extends Authenticatable
             get: fn (string $value) => strtolower($value),
         );
     }
+
+    public function books()
+    {
+        return $this->belongsToMany(Book::class);
+    }
+
 }

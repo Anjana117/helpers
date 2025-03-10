@@ -17,11 +17,11 @@
                 <div class="col-lg-8">
                     <div class="card mt-3 p-3">
                         <h2 class="mb-4 text-center">Register</h2>
-                        <form action="/register/store" method="POST">
+                        <form action="{{ route('store')}}" method="POST">
                             @csrf
                             <div class="mb-3">
                                 <label class="form-label">Name:</label>
-                                <input type="text" name="name" class="form-control" required>
+                                <input type="text" name="name" class="form-control"  required>
 
                             </div>
 

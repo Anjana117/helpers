@@ -22,22 +22,10 @@ class LoginController extends Controller {
             return 'Invalid User Credential';
         }
     }
-
-    // public function dashboardPage() {
-    //     if ( Auth::check() ) {
-    //         $users = User::all();
-
-
-    //         return view( 'auth.dashboard', compact( 'users' ) );
-    //     } else {
-    //         return redirect( '/login' );
-    //     }
-    // }
     public function dashboardPage() {
         if (Auth::check()) {
             $users = User::paginate(5);
-
-            return view('auth.dashboard', compact('users'));
+         return view('auth.dashboard', compact('users'));
         } else {
             return redirect('/login');
         }
