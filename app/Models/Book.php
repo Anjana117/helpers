@@ -10,11 +10,11 @@ class Book extends Model
 
 public function users()
 {
-    return $this->belongsToMany(User::class);
+    return $this->belongsToMany(User::class,'book_user');
 }
 public function categories()
 {
-    return $this->belongsToMany(Category::class);
+    return $this->belongsToMany(Category::class,'book_category');
 }
 
 }

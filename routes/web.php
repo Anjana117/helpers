@@ -39,8 +39,11 @@ Route::prefix('products')->controller(ProductController::class)->group(function 
     Route::delete('/delete/{id}', 'delete')->name('products.delete');
 });
 
-Route::get('/book', [BookController::class, 'index']);
-Route::post('/book/store', [BookController::class, 'store'])->name('book.store');
+Route::get('/books', [BookController::class, 'index'])->name('books.index');
+Route::post('/books', [BookController::class, 'store'])->name('books.store');
+Route::post('/books/{book}/attach', [BookController::class, 'attachUser'])->name('books.attach');
+Route::get('/books/{book}/users', [BookController::class, 'showUsers'])->name('book.users');
+
 
 
 
