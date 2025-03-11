@@ -8,7 +8,6 @@
 
 
                     <div class="d-flex justify-content-center">
-                        <a href="{{ route('logout') }}" class="btn btn-danger mb-4">Logout</a>
                         <a href="{{ route('categories.index') }}" class="btn btn-success ms-2 mb-4">Add Category</a>
                     </div>
                     <input type="text" id="search" name="name" placeholder="Enter user name"

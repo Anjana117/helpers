@@ -15,6 +15,11 @@ class CategoryRepositoryEloquent implements CategoryRepository
     {
         $this->model = $model;
     }
+    public function getCategoryId(int $id)
+    {
+        $id=$this->model->find($id);
+        return $id;
+    }
 
     public function store($data)
     {
@@ -36,22 +41,22 @@ class CategoryRepositoryEloquent implements CategoryRepository
         }
     }
 
-    public function delete($id)
-    {
+    // public function delete( int $id)
+    // {
 
-        try {
-            $category = $this->model->find($id);
+    //     try {
+    //         $category = $this->model->find($id);
 
-            if (!$category) {
-                throw new Exception("Category not found with id {$id}");
-            }
-            return $category->delete();
+    //         if (!$category) {
+    //             throw new Exception("Category not found with id {$id}");
+    //         }
+    //         return $category->delete();
 
-          }
-          catch (Exception $e)
-           {
+    //       }
+    //       catch (Exception $e)
+    //        {
 
-            throw new Exception('Failed to delete category: ' . $e->getMessage());
-        }
-    }
+    //         throw new Exception('Failed to delete category: ' . $e->getMessage());
+    //     }
+    // }
 }

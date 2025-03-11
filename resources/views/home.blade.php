@@ -9,6 +9,6 @@
 </head>
 <body>
 @include('elements.header')
-<h1>Home Page</h1>
+<h1 class="text-center">Home Page</h1>
 </body>
 </html>

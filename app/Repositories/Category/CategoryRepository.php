@@ -8,6 +8,7 @@ interface CategoryRepository
 {
     public function store(array $data);
     public function getAll();
-    public function delete(int $id);
+    public function getCategoryId(int $id);
+
 
 }

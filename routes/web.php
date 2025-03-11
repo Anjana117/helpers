@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BookController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookCategoryController;
 
 Route::get('/', function () {
     return view('home');
@@ -24,7 +25,7 @@ Route::controller(LoginController::class)->group(function () {
     Route::get('/login', 'index');
     Route::post('/loginMatch', 'login')->name('loginMatch');
     Route::get('/dashboard', 'dashboardPage')->name('dashboard');
-    Route::get('/logout', 'logout')->name('logout');
+    Route::post('/logout', 'logout')->name('logout');
 });
 Route::prefix('categories')->controller(CategoryController::class)->group(function () {
     Route::get('/', 'index')->name('categories.index');
@@ -39,11 +40,19 @@ Route::prefix('products')->controller(ProductController::class)->group(function 
     Route::delete('/delete/{id}', 'delete')->name('products.delete');
 });
 
-Route::get('/books', [BookController::class, 'index'])->name('books.index');
-Route::post('/books', [BookController::class, 'store'])->name('books.store');
-Route::post('/books/{book}/attach', [BookController::class, 'attachUser'])->name('books.attach');
-Route::get('/books/{book}/users', [BookController::class, 'showUsers'])->name('book.users');
 
+Route::prefix('books')->group(function () {
+    Route::get('/', [BookController::class, 'index'])->name('books.index');
+    Route::get('/show', [BookController::class, 'show'])->name('books.show');
+    Route::post('/', [BookController::class, 'store'])->name('books.store');
+
+
+    Route::prefix('category')->group(function () {
+        Route::get('/', [BookCategoryController::class, 'index'])->name('books.category.index');
+        Route::post('/store', [BookCategoryController::class, 'store'])->name('books.category.store');
+        Route::get('/show', [BookCategoryController::class, 'show'])->name('books.category.show');
+    });
+});
 
 
 

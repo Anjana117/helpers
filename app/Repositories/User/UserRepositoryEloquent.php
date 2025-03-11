@@ -36,5 +36,12 @@ class UserRepositoryEloquent implements UserRepository
     }
 
 
+    public function getAll ()
+    {
+
+        return $this->model->all();
+    }
+
+
 
 }

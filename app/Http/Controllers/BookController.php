@@ -1,40 +1,41 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Book;
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Repositories\Book\BookRepository;
+use App\Repositories\User\UserRepository;
+use App\Http\Requests\BookRequest;
+
+
 
 class BookController extends Controller
 {
-    public function showUsers(Book $book)
+    protected $bookRepository;
+    protected $userRepository;
+
+    public function __construct(BookRepository $bookRepository, UserRepository $userRepository)
     {
-      $users= $book->users();
-      //dd($users);
-      return view('books.users', compact('book', 'users'));
-    }
-    public function index()
-    {
-        $books = Book::all();
-        $users = User::all();
-        return view('books.index', compact('books', 'users'));
+        $this->bookRepository = $bookRepository;
+        $this->userRepository = $userRepository;
+
     }
 
-    public function store(Request $request)
+      public function index()
     {
-        $request->validate([
-            'name' => 'required',
-            'author' => 'required',
-        ]);
-
-        Book::create($request->only(['name', 'author']));
-        return redirect()->route('books.index')->with('success', 'Book added successfully!');
+        $users = $this->userRepository->getAll();
+        return view('books.index', compact('users'));
     }
 
-    public function attachUser(Request $request, Book $book)
+    public function show()
     {
-        $book->users()->attach($request->user_id);
-        return redirect()->route('book.users', ['book' => $book->id])->with('success', 'User assigned to book!');
+        $users =$this->userRepository->getAll();
+        return view('books.users', compact('users'));
+    }
+
+    public function store(BookRequest $request)
+    {
+        $book= $this->bookRepository->store($request->all());
+         $book->users()->attach($request->user_id);
+         return redirect()->route('books.show')->with('success', 'Book added successfully!');
     }
 
 }

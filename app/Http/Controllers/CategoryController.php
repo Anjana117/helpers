@@ -21,9 +21,10 @@ class CategoryController extends Controller
         return view('category.category', compact('categories'));
     }
 
-    public function delete($id) 
+    public function delete($id)
     {
-        $this->categoryRepository->delete($id);
+       $categoryId = $this->categoryRepository->getCategoryId($id);
+       $categoryId->delete();
 
         return redirect()
             ->route('categories.index')

@@ -11,12 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('books', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('author');
-            $table->timestamps();
-        });
+        if(!Schema::hasTable('books')) {
+
+            Schema::create('books', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table->string('author');
+                $table->timestamps();
+            });
+        }
+
     }
 
     /**
