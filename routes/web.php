@@ -7,6 +7,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\BookController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookCategoryController;
+use App\Http\Controllers\BookIssueController;
+use App\Http\Controllers\StudentController;
 
 Route::get('/', function () {
     return view('home');
@@ -53,7 +55,16 @@ Route::prefix('books')->group(function () {
         Route::get('/show', [BookCategoryController::class, 'show'])->name('books.category.show');
     });
 });
+Route::get('/students',[StudentController::class,'index']);
+Route::post('/students/store',[StudentController::class, 'store'])->name('students.store');
+Route::get('/students/view',[StudentController::class,'view']);
 
+Route::get('/bookissue',[BookIssueController::class,'show']);
+Route::get('
+',[BookIssueController::class,'index']);
+
+Route::post('/bookissue/store',[BookIssueController::class, 'store'])->name('book_issues.store');
+Route::post('book_issues/{id}/return', [BookIssueController::class, 'returnBook'])->name('book_issues.return');
 
 
 

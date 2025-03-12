@@ -15,13 +15,12 @@
     }
 </style>
 @endpush
-    <div class="container mt-5">
+<div class="container justify-content-center mt-5">
+    <div class="row ">
+        <div class="col-lg-8">
 
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="card mt-3 p-3">
-                        <h2>Book Collection</h2>
+                <h2 class="text-center mb-4">Book Collection</h2>
+
 
                         @if (session('success'))
                             <div class="alert alert-success">{{ session('success') }}</div>
@@ -45,7 +44,7 @@
                                 @endforeach
                             </select> --}}
 
-                                <select class="form-control js-example-basic-multiple" name="states[]" multiple="multiple">
+                                <select class="form-control js-example-basic-multiple" name="user_id[]" multiple="multiple">
                                     @foreach ($users as $user)
                                         <option value="{{ $user->id }}">{{ $user->name }}</option>
                                     @endforeach

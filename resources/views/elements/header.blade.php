@@ -1,4 +1,4 @@
-<nav class="main-header navbar navbar-expand navbar-white navbar-light w-100">
+<nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <div class="container d-flex justify-content-between align-items-center w-100">
 
         <ul class="navbar-nav">
@@ -16,14 +16,7 @@
         </div>
         @else
 
-        <ul class="navbar-nav mx-auto">
-            <li class="nav-item">
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="btn btn-danger btn-sm">Sign Out</button>
-                </form>
-            </li>
-        </ul>
+       
         @endguest
     </div>
 </nav>

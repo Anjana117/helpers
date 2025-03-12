@@ -1,49 +1,56 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-4">
-    <h2 class="mb-4 py-5 text-center">Add Product</h2>
-    <div class="card shadow-lg p-4 rounded">
+<div class="container  justify-content-center mt-5">
+    <div class="row ">
+        <div class="col-lg-8">
+            <div class="card p-4 shadow">
+                <h2 class="text-center mb-4">Add Student</h2>
 
+                @if(session('success'))
+                    <div class="alert alert-success">{{ session('success') }}</div>
+                @endif
 
-        @if(session('error'))
-            <div class="alert alert-danger">{{ session('error') }}</div>
-        @endif
+                <form action="{{ route('students.store') }}" method="POST">
+                    @csrf
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input type="text" name="name" class="form-control" placeholder="Enter student name" required>
+                    </div>
 
-        <form action="{{ route('products.store') }}" method="POST"  enctype="multipart/form-data">
-            @csrf
+                    <div class="mb-3">
+                        <label class="form-label">Gender</label>
+                        <select name="gender" class="form-control" required>
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
 
-            <div class="mb-3">
-                <label for="product_name" class="form-label fw-bold">Product Name</label>
-                <input type="text" name="product_name" id="product_name" class="form-control" placeholder="Enter product name" required>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control" placeholder="Enter email" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Phone</label>
+                        <input type="text" name="phone" class="form-control" placeholder="Enter phone number" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Address</label>
+                        <textarea name="address" class="form-control" rows="3" placeholder="Enter address" required></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Class</label>
+                        <input type="text" name="class" class="form-control" placeholder="Enter class name" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">Add Student</button>
+                </form>
             </div>
-
-            <div class="mb-3">
-                <label for="product_description" class="form-label fw-bold">Product Description</label>
-                <textarea name="product_description" id="product_description" class="form-control" rows="3" placeholder="Enter product description"></textarea>
-            </div>
-            <div class="mb-3">
-                <label>Price</label>
-                <input type="number" name="price" class="form-control">
-            </div>
-            <div class="mb-3">
-                <label>Image</label>
-                <input type="file" name="image" class="form-control">
-            </div>
-            <div class="mb-3">
-                <label for="category_id" class="form-label fw-bold">Select Category</label>
-                <select name="category_id" id="category_id" class="form-control" required>
-                    <option value="">-- Select Category --</option>
-                    @foreach($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <button type="submit" class="btn btn-success shadow">
-                <i class="fas fa-plus-circle"></i> Add Product
-            </button>
-        </form>
+        </div>
     </div>
 </div>
 @endsection

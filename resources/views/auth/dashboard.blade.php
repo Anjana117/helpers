@@ -1,50 +1,48 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="card mt-3 p-3">
 
+<div class="container justify-content-center mt-5">
+    <div class="row ">
+        <div class="col-lg-6">
 
-                    <div class="d-flex justify-content-center">
-                        <a href="{{ route('categories.index') }}" class="btn btn-success ms-2 mb-4">Add Category</a>
-                    </div>
-                    <input type="text" id="search" name="name" placeholder="Enter user name"
-                        class="form-control mb-3">
-
-                    <table class="table table-hover mt-2 table-bordered">
-                        <thead>
-                            <tr>
-                                <th scope="col">S.No.</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="userTable">
-                            @foreach ($users as $index => $userdata)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $userdata->name }}</td>
-                                    <td>{{ $userdata->email }}</td>
-                                    <td>
-                                        <a href="{{ route('edit', $userdata->id) }}" class="btn btn-primary">Edit</a>
-                                        <form method="POST" action="{{ route('delete', $userdata->id) }}" class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="button" class="btn delete-btn btn-danger">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-
-                </div>
+            <div class="d-flex justify-content-center">
+                <a href="{{ route('categories.index') }}" class="btn btn-success ms-2 mb-4">Add Category</a>
             </div>
+            <input type="text" id="search" name="name" placeholder="Enter user name"
+                class="form-control mb-3">
+
+            <table class="table table-hover mt-2 table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">S.No.</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="userTable">
+                    @foreach ($users as $index => $userdata)
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $userdata->name }}</td>
+                            <td>{{ $userdata->email }}</td>
+                            <td>
+                                <a href="{{ route('edit', $userdata->id) }}" class="btn btn-primary">Edit</a>
+                                <form method="POST" action="{{ route('delete', $userdata->id) }}" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="button" class="btn delete-btn btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
+
     <div class="d-flex justify-content-center">
         {{ $users->links('pagination::bootstrap-5') }}
     </div>

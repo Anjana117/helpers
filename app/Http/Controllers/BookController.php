@@ -32,9 +32,11 @@ class BookController extends Controller
     }
 
     public function store(BookRequest $request)
+
     {
+
         $book= $this->bookRepository->store($request->all());
-         $book->users()->attach($request->user_id);
+        $book->users()->attach($request->user_id);
          return redirect()->route('books.show')->with('success', 'Book added successfully!');
     }
 
