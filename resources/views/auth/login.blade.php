@@ -6,10 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .card {
+            background-color: #a3a19b;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); 
+            border-radius: 10px; 
+        }
+    </style>
 </head>
 
 <body>
-    @include('elements.header')
+   
     <div class="container mt-5">
 
         <div class="container">
@@ -32,7 +39,8 @@
                             </div>
                             
                             <button type="submit" class="btn btn-primary">Login</button>
-                            <a href="/" class="btn btn-secondary">Back</a>
+                            <a href="/register" class="text-decoration-none fs-6" style="color: black">Not Already have a account?</a>
+                          
 
                         </form>
                         @if ($errors->any())

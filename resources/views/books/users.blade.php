@@ -41,3 +41,7 @@
     <a href="{{ route('books.index') }}" class="btn btn-secondary">Back to Books</a>
 </div>
 @endsection
+Books</a>
+</div>
+</body>
+</html>
